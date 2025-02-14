@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toca el corazón del medio</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9d7d7;
+      overflow: hidden;
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      position: absolute;
+      top: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      font-style: italic;
+      color: black;
+      text-align: center;
+      width: 100%;
+    }
+    .background-hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .background-heart {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png');
+      background-size: cover;
+      animation: float-background 5s infinite ease-in-out;
+    }
+    @keyframes float-background {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      100% { transform: translateY(-50vh) translateX(50vw); opacity: 0; }
+    }
+    .cupid {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Cupid.svg/1200px-Cupid.svg.png');
+      background-size: cover;
+      animation: fly 8s infinite ease-in-out;
+    }
+    @keyframes fly {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-50vw); }
+      100% { transform: translateX(0); }
+    }
+    .card {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 1s ease;
+    }
+    .card.open .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .card-front {
+      background-color: red;
+      z-index: 2;
+      color: white;
+    }
+    .card-back {
+      background-color: pink;
+      transform: rotateY(180deg);
+      color: black;
+    }
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: none;
+    }
+    .hearts.show {
+      display: block;
+    }
+    .heart {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png');
+      background-size: cover;
+      animation: float 3s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+    .next-button {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background-color: red;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .image-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+    .image-box.show {
+      display: flex;
+    }
+    .image-box img {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    .close-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1><strong><em>Toca el corazón del medio</em></strong></h1>
+  <div class="background-hearts">
+    <div class="background-heart" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+    <div class="background-heart" style="top: 30%; left: 50%; animation-delay: 1s;"></div>
+    <div class="background-heart" style="top: 60%; left: 10%; animation-delay: 2s;"></div>
+    <div class="background-heart" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
+  </div>
+  <div class="cupid"></div>
+  <div class="card" id="valentineCard">
+    <div class="card-inner">
+      <div class="card-front">❤️</div>
+      <div class="card-back">Te amo Brigitte Acevedo Pacheco,<br>eres mi san Valentín y<br>eres una persona muy especial para mí ❤️</div>
+    </div>
+    <div class="hearts" id="hearts"></div>
+  </div>
+  <button class="next-button" id="nextButton">Siguiente</button>
+
+  <div class="image-box" id="imageBox">
+    <button class="close-button" id="closeButton">Cerrar</button>
+    <img src="https://images4.imagebam.com/73/24/3d/MEZMN60_o.png" alt="Dos personas abrazándose">
+  </div>
+
+  <script>
+    const card = document.getElementById('valentineCard');
+    const heartsContainer = document.getElementById('hearts');
+    const nextButton = document.getElementById('nextButton');
+    const imageBox = document.getElementById('imageBox');
+    const closeButton = document.getElementById('closeButton');
+
+    card.addEventListener('click', () => {
+      card.classList.toggle('open');
+      if (card.classList.contains('open')) {
+        showHearts();
+      }
+    });
+
+    function showHearts() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => createHeart(), i * 200);
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    nextButton.addEventListener('click', () => {
+      imageBox.classList.add('show');
+    });
+
+    closeButton.addEventListener('click', () => {
+      imageBox.classList.remove('show');
+    });
+  </script>
+</body>
+</html>
